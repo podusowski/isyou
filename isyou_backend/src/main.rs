@@ -3,9 +3,9 @@
 #[macro_use]
 extern crate rocket;
 
-#[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
+#[get("/health")]
+fn health() -> &'static str {
+    "I'm good!"
 }
 
 #[post("/seeks")]
@@ -14,5 +14,5 @@ fn seeks() -> &'static str {
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index, seeks]).launch();
+    rocket::ignite().mount("/", routes![health, seeks]).launch();
 }

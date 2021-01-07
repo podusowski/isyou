@@ -15,12 +15,15 @@ def isyou_backend():
         process.wait()
 
 
-def test_hello(isyou_backend):
+def until_healthy():
     while True:
         try:
-            r = requests.get("http://localhost:8000/")
+            r = requests.get("http://localhost:8000/health")
+            r.raise_for_status()
             break
         except Exception as e:
             print(e)
-            pass
-    print(r)
+
+
+def test_hello(isyou_backend):
+    until_healthy()
