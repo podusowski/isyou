@@ -15,7 +15,7 @@ def isyou_backend():
         process.wait()
 
 
-def until_healthy():
+def wait_until_healthy():
     while True:
         try:
             r = requests.get("http://localhost:8000/health")
@@ -26,4 +26,4 @@ def until_healthy():
 
 
 def test_hello(isyou_backend):
-    until_healthy()
+    wait_until_healthy()
