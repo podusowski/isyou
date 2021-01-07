@@ -8,6 +8,11 @@ fn index() -> &'static str {
     "Hello, world!"
 }
 
+#[post("/seeks")]
+fn seeks() -> &'static str {
+    "seeks"
+}
+
 fn main() {
-    rocket::ignite().mount("/", routes![index]).launch();
+    rocket::ignite().mount("/", routes![index, seeks]).launch();
 }
