@@ -4,6 +4,16 @@ from pathlib import Path
 import requests
 
 
+def wait_until_healthy():
+    while True:
+        try:
+            r = requests.get("http://localhost:8000/health")
+            r.raise_for_status()
+            break
+        except Exception as e:
+            print(e)
+
+
 @pytest.fixture
 def isyou_backend():
     cargo_root = Path(__file__).parent.parent
@@ -13,16 +23,6 @@ def isyou_backend():
     finally:
         process.terminate()
         process.wait()
-
-
-def wait_until_healthy():
-    while True:
-        try:
-            r = requests.get("http://localhost:8000/health")
-            r.raise_for_status()
-            break
-        except Exception as e:
-            print(e)
 
 
 def test_hello(isyou_backend):
