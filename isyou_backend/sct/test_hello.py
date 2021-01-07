@@ -28,3 +28,9 @@ def isyou_backend():
 
 def test_hello(isyou_backend):
     wait_until_healthy()
+
+
+def test_seeks_are_empty_on_startup(isyou_backend):
+    seeks = requests.get("http://localhost:8000/seeks").json()
+    print(seeks)
+    assert [] == seeks

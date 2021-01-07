@@ -3,14 +3,26 @@
 #[macro_use]
 extern crate rocket;
 
+use rocket_contrib::json::Json;
+
+use serde::Serialize;
+
 #[get("/health")]
 fn health() -> &'static str {
     "I'm good!"
 }
 
-#[post("/seeks")]
-fn seeks() -> &'static str {
-    "seeks"
+#[derive(Serialize)]
+struct Seek {
+    id: usize,
+}
+
+#[derive(Serialize)]
+struct Seeks(Vec<Seek>);
+
+#[get("/seeks")]
+fn seeks() -> Json<Seeks> {
+    Json(Seeks(vec![]))
 }
 
 fn main() {
