@@ -25,6 +25,11 @@ fn seeks() -> Json<Seeks> {
     Json(Seeks(vec![]))
 }
 
+#[post("/seeks")]
+fn create_seek() {}
+
 fn main() {
-    rocket::ignite().mount("/", routes![health, seeks]).launch();
+    rocket::ignite()
+        .mount("/", routes![health, seeks, create_seek])
+        .launch();
 }
