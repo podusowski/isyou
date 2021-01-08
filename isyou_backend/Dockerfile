@@ -1,4 +1,2 @@
-FROM rustlang/rust:nightly
-ADD Cargo.* /code/
-ADD src /code/src/
-RUN cd /code/src && cargo build
+FROM alpine
+COPY target/release/isyou_backend /usr/bin/isyou_backend
