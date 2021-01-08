@@ -2,6 +2,18 @@ import pytest
 import subprocess
 from pathlib import Path
 import requests
+import time
+
+
+CARGO_ROOT = Path(__file__).parent.parent
+"""Root directory of isyou_backend."""
+
+PROJECT_ROOT = CARGO_ROOT.parent
+
+
+@pytest.fixture
+def isyou_backend_build():
+    subprocess.check_call(["cargo", "build", "--release"], cwd=CARGO_ROOT)
 
 
 def wait_until_healthy():
@@ -12,12 +24,12 @@ def wait_until_healthy():
             break
         except requests.RequestException as e:
             print(e)
+            time.sleep(1)
 
 
 @pytest.fixture
-def isyou_backend():
-    cargo_root = Path(__file__).parent.parent
-    process = subprocess.Popen(["cargo", "run"], cwd=cargo_root)
+def isyou_backend(isyou_backend_build):
+    process = subprocess.Popen(["docker-compose", "up", "--build"], cwd=PROJECT_ROOT)
     try:
         wait_until_healthy()
         yield
