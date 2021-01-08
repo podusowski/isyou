@@ -2,3 +2,5 @@ version: "3"
 services:
   backend:
     build: isyou_backend
+    ports:
+      - 8000:8000
