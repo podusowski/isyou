@@ -4,3 +4,8 @@ services:
     build: isyou_backend
     ports:
       - 8000:8000
+  database:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
