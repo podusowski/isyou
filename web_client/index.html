@@ -4,10 +4,24 @@
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
 
 <body>
+    <h1>I Seek You</h1>
+
+    <div id="seeks">
+        <h2>Active seeks</h2>
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+
+
     <div id="map" class="map"></div>
+
     <script type="text/javascript">
         var tileLayer = new ol.layer.Tile({
             source: new ol.source.OSM(),
@@ -20,7 +34,18 @@
                 center: [0, 0],
                 zoom: 2,
             }),
-        }); 
+        });
+
+        var seeks = new Vue({
+            el: '#seeks',
+            data: {
+                todos: [
+                    { text: 'Learn JavaScript' },
+                    { text: 'Learn Vue' },
+                    { text: 'Build something awesome' }
+                ]
+            }
+        })
     </script>
 </body>
 
