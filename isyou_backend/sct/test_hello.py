@@ -1,3 +1,4 @@
+from typing import Any
 import pytest
 import subprocess
 from pathlib import Path
@@ -38,12 +39,19 @@ def isyou_docker_backend(isyou_backend_build):
         process.wait()
 
 
+class IsyouBackend:
+    def get_json(self, uri: str) -> Any:
+        r = requests.get(f"http://localhost:8000/{uri}")
+        r.raise_for_status()
+        return r.json()
+
+
 @pytest.fixture
-def isyou_backend():
+def isyou_backend() -> IsyouBackend:
     process = subprocess.Popen(["cargo", "run"], cwd=CARGO_ROOT)
     try:
         wait_until_healthy()
-        yield
+        yield IsyouBackend()
     finally:
         process.terminate()
         process.wait()
@@ -53,16 +61,15 @@ def test_hello(isyou_backend):
     wait_until_healthy()
 
 
-def test_seeks_are_empty_on_startup(isyou_backend):
+def test_seeks_are_empty_on_startup(isyou_backend: IsyouBackend):
     seeks = requests.get("http://localhost:8000/seeks").json()
-    print(seeks)
     assert [] == seeks
 
 
-def test_creating_new_seek(isyou_backend):
+def test_creating_new_seek(isyou_backend: IsyouBackend):
     r = requests.post("http://localhost:8000/seeks")
     r.raise_for_status()
-    seeks = requests.get("http://localhost:8000/seeks").json()
+    seeks = isyou_backend.get_json("/seeks")
     assert 1 == len(seeks)
 
     points = requests.get("http://localhost:8000/seeks/1/points").json()
@@ -71,5 +78,5 @@ def test_creating_new_seek(isyou_backend):
     r = requests.post("http://localhost:8000/seeks/1/points")
     r.raise_for_status()
 
-    points = requests.get("http://localhost:8000/seeks/1/points").json()
+    points = isyou_backend.get_json("/seeks/1/points")
     assert 1 == len(points)
