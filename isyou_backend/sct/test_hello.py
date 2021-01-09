@@ -80,4 +80,4 @@ def test_creating_new_seek(isyou_backend: IsyouBackend):
     r.raise_for_status()
 
     points = isyou_backend.get_json("/seeks/1/points")
-    assert 1 == len(points)
+    assert [{"lat": 1, "lon": 1}] == points
