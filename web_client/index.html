@@ -4,7 +4,7 @@
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
 </head>
 
 <body>
@@ -35,16 +35,25 @@
             }),
         });
 
-        var seeks = new Vue({
-            el: '#seeks',
-            data: {
-                todos: [
-                    { text: 'Learn JavaScript' },
-                    { text: 'Learn Vue' },
-                    { text: 'Build something awesome' }
-                ]
+        const ListRendering = {
+            data() {
+                return {
+                    todos: [
+                        { text: 'Learn JavaScript' },
+                        { text: 'Learn Vue' },
+                        { text: 'Build something awesome' }
+                    ]
+                }
+            },
+            mounted() {
+                setInterval(() => {
+                    fetch("http://localhost:8000/seeks").then((response) => { this.todos = response; })
+                }, 1000);
             }
-        })
+        }
+
+        Vue.createApp(ListRendering).mount('#seeks')
+
     </script>
 </body>
 
