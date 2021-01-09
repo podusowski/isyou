@@ -72,7 +72,7 @@ def test_creating_new_seek(isyou_backend: IsyouBackend):
     seeks = isyou_backend.get_json("/seeks")
     assert 1 == len(seeks)
 
-    points = requests.get("http://localhost:8000/seeks/1/points").json()
+    points = isyou_backend.get_json("/seeks/1/points")
     assert 0 == len(points)
 
     r = requests.post("http://localhost:8000/seeks/1/points")
