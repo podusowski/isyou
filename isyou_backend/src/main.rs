@@ -11,7 +11,7 @@ fn health() -> &'static str {
     "I'm good!"
 }
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Serialize, serde::Deserialize)]
 struct Point {
     lat: f64,
     lon: f64,
@@ -80,7 +80,7 @@ fn create_seek_point(global_state: rocket::State<Global>, id: usize) {
 
 fn main() {
     rocket::ignite()
-        .mount("/", routes![health, seeks, create_seek])
+        .mount("/", routes![health, seeks, create_seek, create_seek_point])
         .manage(Global::default())
         .launch();
 }
