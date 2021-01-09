@@ -28,8 +28,19 @@ def wait_until_healthy():
 
 
 @pytest.fixture
-def isyou_backend(isyou_backend_build):
+def isyou_docker_backend(isyou_backend_build):
     process = subprocess.Popen(["docker-compose", "up", "--build"], cwd=PROJECT_ROOT)
+    try:
+        wait_until_healthy()
+        yield
+    finally:
+        process.terminate()
+        process.wait()
+
+
+@pytest.fixture
+def isyou_backend():
+    process = subprocess.Popen(["cargo", "run"], cwd=CARGO_ROOT)
     try:
         wait_until_healthy()
         yield
