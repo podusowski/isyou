@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
+</head>
+
+<body>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+        var tileLayer = new ol.layer.Tile({
+            source: new ol.source.OSM(),
+        });
+
+        var map = new ol.Map({
+            layers: [tileLayer],
+            target: 'map',
+            view: new ol.View({
+                center: [0, 0],
+                zoom: 2,
+            }),
+        }); 
+    </script>
+</body>
+
+</html>
