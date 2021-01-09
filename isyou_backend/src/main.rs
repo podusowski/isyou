@@ -78,9 +78,27 @@ fn create_seek_point(global_state: rocket::State<Global>, id: usize) {
         .and_modify(|seek| seek.points.push(Point { lat: 1.0, lon: 1.0 }));
 }
 
+#[derive(Clone, Serialize)]
+struct SeekPoints(Vec<Point>);
+
+#[get("/seeks/<id>/points")]
+fn get_seek_points(global_state: rocket::State<Global>, id: usize) -> Json<SeekPoints> {
+    let seeks_by_id = global_state.seeks_by_id.lock().unwrap();
+    Json(SeekPoints(seeks_by_id[&id].points.clone()))
+}
+
 fn main() {
     rocket::ignite()
-        .mount("/", routes![health, seeks, create_seek, create_seek_point])
+        .mount(
+            "/",
+            routes![
+                health,
+                seeks,
+                create_seek,
+                create_seek_point,
+                get_seek_points
+            ],
+        )
         .manage(Global::default())
         .launch();
 }
