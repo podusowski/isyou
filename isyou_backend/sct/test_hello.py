@@ -51,3 +51,5 @@ def test_seeks_are_empty_on_startup(isyou_backend):
 def test_creating_new_seek(isyou_backend):
     r = requests.post("http://localhost:8000/seeks")
     r.raise_for_status()
+    seeks = requests.get("http://localhost:8000/seeks").json()
+    assert 1 == len(seeks)
