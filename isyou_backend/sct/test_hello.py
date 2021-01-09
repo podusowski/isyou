@@ -53,3 +53,5 @@ def test_creating_new_seek(isyou_backend):
     r.raise_for_status()
     seeks = requests.get("http://localhost:8000/seeks").json()
     assert 1 == len(seeks)
+
+    r = requests.post("http://localhost:8000/seeks/1/points")

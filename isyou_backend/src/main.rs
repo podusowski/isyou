@@ -71,7 +71,12 @@ fn create_seek(global_state: rocket::State<Global>) {
 }
 
 #[post("/seeks/<id>/points")]
-fn create_seek_point(global_state: rocket::State<Global>, id: usize) {}
+fn create_seek_point(global_state: rocket::State<Global>, id: usize) {
+    let mut seeks_by_id = global_state.seeks_by_id.lock().unwrap();
+    seeks_by_id
+        .entry(id)
+        .and_modify(|seek| seek.points.push(Point { lat: 1.0, lon: 1.0 }));
+}
 
 fn main() {
     rocket::ignite()
