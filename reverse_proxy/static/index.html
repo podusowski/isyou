@@ -47,7 +47,7 @@
             },
             mounted() {
                 setInterval(() => {
-                    fetch("http://localhost:8000/seeks").then((response) => { this.todos = response; })
+                    fetch("backend/seeks").then((response) => { this.todos = response; })
                 }, 1000);
             }
         }
