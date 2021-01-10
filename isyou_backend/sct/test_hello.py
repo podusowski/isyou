@@ -71,20 +71,17 @@ def test_seeks_are_empty_on_startup(isyou_backend: IsyouBackend):
 
 
 def test_creating_new_seek(isyou_backend: IsyouBackend):
-    r = requests.post("http://localhost:8000/seeks")
-    r.raise_for_status()
+    # create a seek
+    isyou_backend.post("/seeks")
 
     assert [1] == isyou_backend.get_json("/seeks")
+    assert [] == isyou_backend.get_json("/seeks/1/points")
 
-    points = isyou_backend.get_json("/seeks/1/points")
-    assert 0 == len(points)
-
-    r = requests.post("http://localhost:8000/seeks/1/points")
-    r.raise_for_status()
-
-    points = isyou_backend.get_json("/seeks/1/points")
-    assert [{"lat": 1, "lon": 1}] == points
+    # put some point
+    isyou_backend.post("/seeks/1/points")
+    assert [{"lat": 1, "lon": 1}] == isyou_backend.get_json("/seeks/1/points")
 
     # create another one
     isyou_backend.post("/seeks")
     assert [1, 2] == isyou_backend.get_json("/seeks")
+    assert [] == isyou_backend.get_json("/seeks/2/points")
