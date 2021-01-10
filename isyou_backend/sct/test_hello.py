@@ -45,6 +45,10 @@ class IsyouBackend:
         r.raise_for_status()
         return r.json()
 
+    def post(self, uri: str) -> None:
+        r = requests.post(f"http://localhost:8000/{uri}")
+        r.raise_for_status()
+
 
 @pytest.fixture
 def isyou_backend() -> IsyouBackend:
@@ -70,8 +74,7 @@ def test_creating_new_seek(isyou_backend: IsyouBackend):
     r = requests.post("http://localhost:8000/seeks")
     r.raise_for_status()
 
-    seeks = isyou_backend.get_json("/seeks")
-    assert 1 == len(seeks)
+    assert [1] == isyou_backend.get_json("/seeks")
 
     points = isyou_backend.get_json("/seeks/1/points")
     assert 0 == len(points)
@@ -81,3 +84,7 @@ def test_creating_new_seek(isyou_backend: IsyouBackend):
 
     points = isyou_backend.get_json("/seeks/1/points")
     assert [{"lat": 1, "lon": 1}] == points
+
+    # create another one
+    isyou_backend.post("/seeks")
+    assert [1, 2] == isyou_backend.get_json("/seeks")

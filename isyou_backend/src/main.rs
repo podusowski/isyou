@@ -36,12 +36,14 @@ impl Seek {
 struct Seeks(Vec<Seek>);
 
 struct Global {
+    last_id: std::sync::Mutex<usize>,
     seeks_by_id: std::sync::Arc<std::sync::Mutex<std::collections::HashMap<usize, Seek>>>,
 }
 
 impl Default for Global {
     fn default() -> Global {
         Global {
+            last_id: std::sync::Mutex::new(0),
             seeks_by_id: std::sync::Arc::new(std::sync::Mutex::new(
                 std::collections::HashMap::new(),
             )),
@@ -66,8 +68,10 @@ fn seeks(global_state: rocket::State<Global>) -> Json<SeekIds> {
 
 #[post("/seeks")]
 fn create_seek(global_state: rocket::State<Global>) {
+    let mut id = global_state.last_id.lock().unwrap();
+    *id += 1;
     let mut seeks_by_id = global_state.seeks_by_id.lock().unwrap();
-    seeks_by_id.insert(1, Seek::new());
+    seeks_by_id.insert(*id, Seek::new());
 }
 
 #[post("/seeks/<id>/points")]
