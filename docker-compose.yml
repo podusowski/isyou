@@ -2,5 +2,7 @@ version: "3"
 services:
   backend:
     build: isyou_backend
+  reverse_proxy:
+    build: reverse_proxy
     ports:
-      - 8000:8000
+      - 80:8000
