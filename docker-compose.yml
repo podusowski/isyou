@@ -5,4 +5,4 @@ services:
   reverse_proxy:
     build: reverse_proxy
     ports:
-      - 80:8000
+      - 8000:8000
