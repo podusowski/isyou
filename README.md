@@ -4,7 +4,7 @@ Development server can be deployed using `docker-compose`.
 
 `Dockerfile` expects existing binary therefore it has to be built first:
 ```
-env -C isyou_backend/ cargo build
+env -C isyou_backend/ cargo build --release
 ```
 
 Docker images can be built directly from `docker-compose`'s `up` command:
