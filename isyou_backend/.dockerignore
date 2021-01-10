@@ -1,3 +1,4 @@
 *
 !target/release/isyou_backend
 !target/debug/isyou_backend
+!Rocket.toml
