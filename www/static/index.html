@@ -9,6 +9,7 @@
 
 <body>
     <h1>I Seek You</h1>
+    <p>Community Search and Rescue</p>
 
     <div id="seeks">
         <h2>Active seeks</h2>
@@ -17,6 +18,7 @@
                 {{ todo.text }}
             </li>
         </ol>
+        <button v-on:click="createSeek">Create Seek</button>
     </div>
 
     <div id="map" class="map"></div>
@@ -43,6 +45,12 @@
                         { text: 'Learn Vue' },
                         { text: 'Build something awesome' }
                     ]
+                }
+            },
+            methods: {
+                createSeek: function (event) {
+                    fetch("backend/seeks", { method: "POST" })
+                        .then((response) => { alert(response); })
                 }
             },
             mounted() {

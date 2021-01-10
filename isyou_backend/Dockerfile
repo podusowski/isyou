@@ -1,3 +1,4 @@
 FROM ubuntu
-COPY target/release/isyou_backend /usr/bin/isyou_backend
+ARG target=release
+COPY target/${target}/isyou_backend /usr/bin/isyou_backend
 ENTRYPOINT [ "isyou_backend" ]

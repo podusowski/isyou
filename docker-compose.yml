@@ -1,7 +1,10 @@
 version: "3"
 services:
   backend:
-    build: isyou_backend
+    build:
+      context: isyou_backend
+      args:
+        - target=${BACKEND_TARGET:-release}
   www:
     build: www
     ports:
