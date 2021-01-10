@@ -15,7 +15,7 @@
         <h2>Active seeks</h2>
         <ol>
             <li v-for="todo in todos">
-                {{ todo.text }}
+                {{ todo }}
             </li>
         </ol>
         <button v-on:click="createSeek">Create Seek</button>
@@ -40,11 +40,7 @@
         const ListRendering = {
             data() {
                 return {
-                    todos: [
-                        { text: 'Learn JavaScript' },
-                        { text: 'Learn Vue' },
-                        { text: 'Build something awesome' }
-                    ]
+                    todos: []
                 }
             },
             methods: {
@@ -55,7 +51,9 @@
             },
             mounted() {
                 setInterval(() => {
-                    fetch("backend/seeks").then((response) => { this.todos = response; })
+                    fetch("backend/seeks")
+                        .then(response => response.json())
+                        .then(response => this.todos = response)
                 }, 1000);
             }
         }
