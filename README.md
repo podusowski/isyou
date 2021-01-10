@@ -1,5 +1,18 @@
+Mission
+-------
+The idea came to me after my second participation is a search for a missing person. The story behind
+such searches is simple. Often when someone gets lost, family calls the police and hospitals but
+also publishes a note on local social media groups. This mobilizes normal people who join the search
+by checking out surrounding neighborhood.
+
+
+So what does it do?
+-------------------
+Every search participant might enable a beacon which will repeatedly report current position. Beacons are then displayed on a map so everyone can check what areas were already checked or not.
+
+
 Running development server
-==========================
+--------------------------
 Development server can be deployed using `docker-compose`.
 
 `Dockerfile` expects existing binary therefore it has to be built first:
