@@ -16,6 +16,7 @@
         <ol>
             <li v-for="todo in todos">
                 {{ todo }}
+                <seek></seek>
             </li>
         </ol>
         <button v-on:click="createSeek">Create Seek</button>
@@ -58,8 +59,31 @@
             }
         }
 
-        Vue.createApp(ListRendering).mount('#seeks')
+        var app = Vue.createApp(ListRendering)
 
+        app.component('seek', {
+            template: `
+                <button @click="modalOpen = true">
+                    Enter
+                </button>
+
+                <div v-if="modalOpen" class="modal">
+                <div>
+                    I'm a modal! 
+                    <button @click="modalOpen = false">
+                    Close
+                    </button>
+                </div>
+                </div>
+            `,
+            data() {
+                return {
+                    modalOpen: false
+                }
+            }
+        });
+
+        app.mount('#seeks');
     </script>
 </body>
 
