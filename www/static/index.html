@@ -11,15 +11,8 @@
     <h1>I Seek You</h1>
     <p>Community Search and Rescue</p>
 
-    <div id="seeks">
-        <h2>Active seeks</h2>
-        <ol>
-            <li v-for="todo in todos">
-                {{ todo }}
-                <seek></seek>
-            </li>
-        </ol>
-        <button v-on:click="createSeek">Create Seek</button>
+    <div id="isyou">
+        <seeks></seeks>
     </div>
 
     <div id="map" class="map"></div>
@@ -38,7 +31,20 @@
             }),
         });
 
-        const ListRendering = {
+
+        var app = Vue.createApp({});
+
+        app.component('seeks', {
+            template: `
+                <h2>Active seeks</h2>
+                <ol>
+                    <li v-for="todo in todos">
+                        {{ todo }}
+                        <seek></seek>
+                    </li>
+                </ol>
+                <button v-on:click="createSeek">Create Seek</button>
+            `,
             data() {
                 return {
                     todos: []
@@ -57,9 +63,7 @@
                         .then(response => this.todos = response)
                 }, 1000);
             }
-        }
-
-        var app = Vue.createApp(ListRendering)
+        });
 
         app.component('seek', {
             template: `
@@ -83,7 +87,7 @@
             }
         });
 
-        app.mount('#seeks');
+        app.mount('#isyou');
     </script>
 </body>
 
