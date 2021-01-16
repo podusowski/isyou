@@ -23,7 +23,7 @@
                 <h2>Active seeks</h2>
                 <ol>
                     <li v-for="todo in todos">
-                        <a v-bind:href="todo.uri">{{ todo }} {{ todo }}</a>
+                        <a v-bind:href="todo.uri">{{ todo.id }}</a>
                     </li>
                 </ol>
                 <button v-on:click="createSeek">Create Seek</button>
@@ -41,9 +41,8 @@
             },
             mounted() {
                 setInterval(() => {
-                    function addUri(element) {
-                        element.uri = "dupa";
-                        return element;
+                    function addUri(id) {
+                        return {"id": id, "uri": "seek.html?id" + id};
                     }
                     fetch("backend/seeks")
                         .then(response => response.json())
