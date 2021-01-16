@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <h1>I Seek You</h1>
+    <p>Community Search and Rescue</p>
+
+    <div id="map" class="map"></div>
+
+    <script type="text/javascript">
+        var tileLayer = new ol.layer.Tile({
+            source: new ol.source.OSM(),
+        });
+
+        var map = new ol.Map({
+            layers: [tileLayer],
+            target: 'map',
+            view: new ol.View({
+                center: [0, 0],
+                zoom: 2,
+            }),
+        });
+    </script>
+</body>

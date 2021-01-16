@@ -15,23 +15,7 @@
         <seeks></seeks>
     </div>
 
-    <div id="map" class="map"></div>
-
     <script type="text/javascript">
-        var tileLayer = new ol.layer.Tile({
-            source: new ol.source.OSM(),
-        });
-
-        var map = new ol.Map({
-            layers: [tileLayer],
-            target: 'map',
-            view: new ol.View({
-                center: [0, 0],
-                zoom: 2,
-            }),
-        });
-
-
         var app = Vue.createApp({});
 
         app.component('seeks', {
@@ -39,8 +23,7 @@
                 <h2>Active seeks</h2>
                 <ol>
                     <li v-for="todo in todos">
-                        {{ todo }}
-                        <seek></seek>
+                        <a v-bind:href="todo.uri">{{ todo }} {{ todo }}</a>
                     </li>
                 </ol>
                 <button v-on:click="createSeek">Create Seek</button>
@@ -58,32 +41,14 @@
             },
             mounted() {
                 setInterval(() => {
+                    function addUri(element) {
+                        element.uri = "dupa";
+                        return element;
+                    }
                     fetch("backend/seeks")
                         .then(response => response.json())
-                        .then(response => this.todos = response)
+                        .then(response => this.todos = response.map(addUri))
                 }, 1000);
-            }
-        });
-
-        app.component('seek', {
-            template: `
-                <button @click="modalOpen = true">
-                    Enter
-                </button>
-
-                <div v-if="modalOpen" class="modal">
-                <div>
-                    I'm a modal! 
-                    <button @click="modalOpen = false">
-                    Close
-                    </button>
-                </div>
-                </div>
-            `,
-            data() {
-                return {
-                    modalOpen: false
-                }
             }
         });
 
