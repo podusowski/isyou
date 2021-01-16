@@ -11,8 +11,8 @@ So what does it do?
 Every search participant might enable a beacon which will repeatedly report current position. Beacons are then displayed on a map so everyone can check what areas were already checked or not.
 
 
-Running development server
---------------------------
+Running a development server
+----------------------------
 Development server can be deployed using `docker-compose`.
 
 `Dockerfile` expects existing binary therefore it has to be built first:
